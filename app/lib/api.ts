@@ -265,6 +265,15 @@ export const editorSheetsApi = {
     const response = await fetch(`${API_BASE_URL}/editor-sheets/all`)
     return response.json()
   },
+
+  update: async (sheetId: string, updates: any) => {
+    const response = await fetch(`/api/editor-sheets/${sheetId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
+    })
+    return response.json()
+  },
 }
 
 // Health check
