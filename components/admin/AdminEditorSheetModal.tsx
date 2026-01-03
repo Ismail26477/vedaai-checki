@@ -168,21 +168,21 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] md:max-h-[85vh] overflow-y-auto w-[95vw] md:w-auto p-4 md:p-6">
         {isLoading ? (
           <div className="py-12 text-center">
             <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
-            <p className="text-muted-foreground">Loading sheet...</p>
+            <p className="text-muted-foreground text-sm">Loading sheet...</p>
           </div>
         ) : !sheet ? (
           <div className="py-12 text-center">
-            <p className="text-destructive">Sheet not found</p>
+            <p className="text-destructive text-sm">Sheet not found</p>
           </div>
         ) : (
-          <div className="space-y-6">
-            <div className="space-y-2 border-b pb-6">
+          <div className="space-y-4 md:space-y-6">
+            <div className="space-y-2 border-b pb-4 md:pb-6">
               {isEditingSheet ? (
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="sheet-name" className="text-xs font-medium">
                       Sheet Name
@@ -191,7 +191,7 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                       id="sheet-name"
                       value={editedSheet?.sheetName || ""}
                       onChange={(e) => setEditedSheet({ ...editedSheet, sheetName: e.target.value })}
-                      className="text-lg font-bold"
+                      className="text-lg font-bold h-9 md:h-10"
                     />
                   </div>
                   <div className="space-y-2">
@@ -203,9 +203,10 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                       value={editedSheet?.description || ""}
                       onChange={(e) => setEditedSheet({ ...editedSheet, description: e.target.value })}
                       placeholder="Sheet description"
+                      className="h-9 md:h-10"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="space-y-2">
                       <Label htmlFor="sheet-category" className="text-xs font-medium">
                         Category
@@ -214,7 +215,8 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                         id="sheet-category"
                         value={editedSheet?.category || ""}
                         onChange={(e) => setEditedSheet({ ...editedSheet, category: e.target.value })}
-                        placeholder="e.g., Content, Design"
+                        placeholder="e.g., Content"
+                        className="h-9 md:h-10"
                       />
                     </div>
                     <div className="space-y-2">
@@ -226,15 +228,22 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                         type="date"
                         value={editedSheet?.dueDate ? editedSheet.dueDate.split("T")[0] : ""}
                         onChange={(e) => setEditedSheet({ ...editedSheet, dueDate: e.target.value })}
+                        className="h-9 md:h-10"
                       />
                     </div>
                   </div>
-                  <div className="flex gap-2 justify-end pt-2">
-                    <Button size="sm" variant="outline" onClick={handleCancelEdit} disabled={isSavingSheet}>
+                  <div className="flex gap-2 justify-end pt-2 flex-wrap-reverse">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={handleCancelEdit}
+                      disabled={isSavingSheet}
+                      className="h-8 md:h-9 bg-transparent"
+                    >
                       <X className="h-4 w-4 mr-1" />
                       Cancel
                     </Button>
-                    <Button size="sm" onClick={handleSaveSheet} disabled={isSavingSheet}>
+                    <Button size="sm" onClick={handleSaveSheet} disabled={isSavingSheet} className="h-8 md:h-9">
                       <Check className="h-4 w-4 mr-1" />
                       {isSavingSheet ? "Saving..." : "Save"}
                     </Button>
@@ -242,17 +251,17 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                 </div>
               ) : (
                 <>
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h2 className="text-2xl font-bold text-foreground">{sheet.sheetName}</h2>
-                      <p className="text-sm text-muted-foreground">By {sheet.employeeName}</p>
-                      <p className="text-muted-foreground">{sheet.description}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-xl md:text-2xl font-bold text-foreground break-words">{sheet.sheetName}</h2>
+                      <p className="text-xs md:text-sm text-muted-foreground">By {sheet.employeeName}</p>
+                      <p className="text-xs md:text-sm text-muted-foreground break-words">{sheet.description}</p>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={handleEditSheet}
-                      className="text-primary hover:text-primary hover:bg-primary/10"
+                      className="text-primary hover:text-primary hover:bg-primary/10 flex-shrink-0 h-8 md:h-9"
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
@@ -263,40 +272,52 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
 
             {!isEditingSheet && (
               <>
-                <div className="grid grid-cols-2 gap-4 p-4 bg-muted/30 rounded-lg border border-border">
-                  <div className="space-y-1">
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Category</p>
-                    <p className="text-sm font-semibold text-foreground">{sheet.category || "Not specified"}</p>
+                <div className="grid grid-cols-2 gap-2 md:gap-4 p-3 md:p-4 bg-muted/30 rounded-lg border border-border">
+                  <div className="space-y-1 min-w-0">
+                    <p className="text-[10px] md:text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      Category
+                    </p>
+                    <p className="text-xs md:text-sm font-semibold text-foreground truncate">
+                      {sheet.category || "Not specified"}
+                    </p>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Due Date</p>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-primary" />
-                      <p className="text-sm font-semibold text-foreground">
+                  <div className="space-y-1 min-w-0">
+                    <p className="text-[10px] md:text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      Due Date
+                    </p>
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3 md:h-4 md:w-4 text-primary flex-shrink-0" />
+                      <p className="text-xs md:text-sm font-semibold text-foreground truncate">
                         {sheet.dueDate ? new Date(sheet.dueDate).toLocaleDateString() : "Not set"}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-5 w-5 text-primary" />
-                      <h3 className="text-lg font-semibold">Tasks ({sheet.tasks.length})</h3>
+                {/* Tasks Section with responsive layout */}
+                <div className="space-y-3 md:space-y-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <Clock className="h-4 w-4 md:h-5 md:w-5 text-primary flex-shrink-0" />
+                      <h3 className="text-base md:text-lg font-semibold truncate">Tasks ({sheet.tasks.length})</h3>
                     </div>
                     {!isAddingTask && (
-                      <Button size="sm" className="gap-2" onClick={() => setIsAddingTask(true)}>
-                        <Plus className="h-4 w-4" />
-                        Add Task
+                      <Button
+                        size="sm"
+                        className="gap-1 md:gap-2 h-8 md:h-9 text-xs md:text-sm flex-shrink-0"
+                        onClick={() => setIsAddingTask(true)}
+                      >
+                        <Plus className="h-3 w-3 md:h-4 md:w-4" />
+                        <span className="hidden sm:inline">Add Task</span>
+                        <span className="sm:hidden">Add</span>
                       </Button>
                     )}
                   </div>
 
                   {isAddingTask && (
-                    <div className="p-4 bg-muted/40 border border-border rounded-lg space-y-3">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div className="space-y-2">
+                    <div className="p-3 md:p-4 bg-muted/40 border border-border rounded-lg space-y-2 md:space-y-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
+                        <div className="space-y-1">
                           <Label htmlFor="task-date" className="text-xs font-medium">
                             Date
                           </Label>
@@ -305,10 +326,10 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                             type="date"
                             value={formData.date}
                             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                            className="h-9"
+                            className="h-8 md:h-9 text-xs md:text-sm"
                           />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-1">
                           <Label htmlFor="task-title" className="text-xs font-medium">
                             Title
                           </Label>
@@ -317,11 +338,11 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                             placeholder="Task title"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            className="h-9"
+                            className="h-8 md:h-9 text-xs md:text-sm"
                           />
                         </div>
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-1">
                         <Label htmlFor="task-link" className="text-xs font-medium">
                           Google Drive Link
                         </Label>
@@ -330,10 +351,10 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                           placeholder="https://drive.google.com/..."
                           value={formData.link}
                           onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-                          className="h-9"
+                          className="h-8 md:h-9 text-xs md:text-sm"
                         />
                       </div>
-                      <div className="flex gap-2 justify-end pt-2">
+                      <div className="flex gap-2 justify-end pt-2 flex-wrap-reverse">
                         <Button
                           size="sm"
                           variant="outline"
@@ -341,6 +362,7 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                             setIsAddingTask(false)
                             setFormData({ date: "", title: "", link: "" })
                           }}
+                          className="h-8 md:h-9 text-xs md:text-sm"
                         >
                           Cancel
                         </Button>
@@ -348,6 +370,7 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                           size="sm"
                           onClick={handleAddTask}
                           disabled={!formData.date || !formData.title || !formData.link}
+                          className="h-8 md:h-9 text-xs md:text-sm"
                         >
                           Add Task
                         </Button>
@@ -356,27 +379,29 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                   )}
 
                   {sheet.tasks.length > 0 ? (
-                    <div className="space-y-2">
+                    <div className="space-y-2 md:space-y-3">
                       {sheet.tasks.map((task) => (
                         <div
                           key={task._id}
-                          className="p-4 border border-border rounded-lg hover:bg-muted/20 hover:border-primary/30 transition-colors group"
+                          className="p-3 md:p-4 border border-border rounded-lg hover:bg-muted/20 hover:border-primary/30 transition-colors group"
                         >
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex-1 space-y-2 min-w-0">
-                              <h4 className="font-semibold text-foreground line-clamp-2">{task.title}</h4>
-                              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                                <span className="flex items-center gap-1">
-                                  <Calendar className="h-3.5 w-3.5 flex-shrink-0" />
+                          <div className="flex items-start justify-between gap-2 md:gap-4">
+                            <div className="flex-1 space-y-1 md:space-y-2 min-w-0">
+                              <h4 className="font-semibold text-sm md:text-base text-foreground line-clamp-2">
+                                {task.title}
+                              </h4>
+                              <div className="flex flex-wrap items-center gap-2 md:gap-3 text-xs md:text-sm text-muted-foreground">
+                                <span className="flex items-center gap-1 flex-shrink-0">
+                                  <Calendar className="h-3 w-3 md:h-3.5 md:w-3.5 flex-shrink-0" />
                                   {new Date(task.date).toLocaleDateString()}
                                 </span>
                                 <a
                                   href={task.link}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="flex items-center gap-1 text-primary hover:underline flex-shrink-0"
+                                  className="flex items-center gap-1 text-primary hover:underline flex-shrink-0 text-xs"
                                 >
-                                  <Link2 className="h-3.5 w-3.5" />
+                                  <Link2 className="h-3 w-3 md:h-3.5 md:w-3.5" />
                                   Drive
                                 </a>
                               </div>
@@ -385,7 +410,7 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDeleteTask(task._id)}
-                              className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                              className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0 flex-shrink-0"
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -394,9 +419,11 @@ export function AdminEditorSheetModal({ sheetId, isOpen, onClose }: AdminEditorS
                       ))}
                     </div>
                   ) : (
-                    <div className="py-8 text-center border border-dashed border-border rounded-lg">
-                      <FileText className="h-10 w-10 mx-auto mb-2 opacity-50" />
-                      <p className="text-sm text-muted-foreground">No tasks yet. Add your first task to get started!</p>
+                    <div className="py-6 md:py-8 text-center border border-dashed border-border rounded-lg">
+                      <FileText className="h-8 w-8 md:h-10 md:w-10 mx-auto mb-2 opacity-50" />
+                      <p className="text-xs md:text-sm text-muted-foreground">
+                        No tasks yet. Add your first task to get started!
+                      </p>
                     </div>
                   )}
                 </div>
