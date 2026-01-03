@@ -1,14 +1,12 @@
 import mongoose from "mongoose"
 
-const MONGODB_URI =
-  process.env.MONGODB_URI ||
-  "mongodb+srv://vedaa:vedaa123@vedaa-ai.blmd84r.mongodb.net/office_management?retryWrites=true&w=majority&appName=vedaa-Ai"
+const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable")
+  throw new Error("Please define the MONGODB_URI environment variable in Vercel settings or .env.local")
 }
 
-console.log("[v0] MongoDB URI configured:", MONGODB_URI.split("@")[0] + "@...")
+console.log("[v0] MongoDB URI configured:", MONGODB_URI.substring(0, 30) + "...")
 
 // @ts-ignore
 let cached = global.mongoose
